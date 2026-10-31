@@ -138,7 +138,7 @@ with st.container():
                 <div class="cursive-letter">Dear Kashish...</div>
                 <p style="color: #4b5563; font-size: 1.1rem; line-height: 1.7; font-family: 'Poppins', sans-serif;">
                     Wishing you a spectacular year ahead filled with infinite joy, success, and laughter! 
-                    Here is a virtual coupon for a movie night, a giant dessert session, or anything your heart desires today. 💖
+                    Here is a virtual coupon for a movie night, a giant dessert session, or anything your heart desires today. The best twin i found.💖
                 </p>
                 <div style="font-size: 2.5rem; margin-top: 15px;">🎁 🍫 ✨</div>
             </div>
