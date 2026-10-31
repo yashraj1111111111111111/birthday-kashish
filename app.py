@@ -130,20 +130,28 @@ with st.container():
                 st.rerun()
     else:
         st.balloons()
+                # Upgraded Audio rendering block triggered by button click
         try:
             import os
             prefix = "kashu/" if os.path.exists("kashu/birthday-song.mp3") else ""
             audio_base64 = get_base64_encoded_file(f"{prefix}birthday-song.mp3")
-            st.markdown(f'<audio autoplay loop><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>', unsafe_allow_html=True)
+            
+            # HTML5 Audio component with explicit browser play configurations
+            st.markdown(f"""
+                <audio autoplay="true" loop="true" style="display:none;">
+                    <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
+                </audio>
+            """, unsafe_allow_html=True)
         except Exception:
-            pass
+            st.warning("🎵 Double-check that 'birthday-song.mp3' is named correctly in your repository!")
+
 
         st.markdown("""
             <div class="fade-in" style="background: linear-gradient(to bottom right, #fff5f5, #fff0f6); padding: 25px; border-radius: 20px; margin-top: 20px; border: 1px solid #fbcfe8;">
                 <div class="cursive-letter">Dear Kashish...</div>
                 <p style="color: #4b5563; font-size: 1.1rem; line-height: 1.7; font-family: 'Poppins', sans-serif;">
                     Wishing you a spectacular year ahead filled with infinite joy, success, and laughter! 
-                    Here is a virtual coupon for a movie night, a giant dessert session, or anything your heart desires today. 💖
+                    Here is a virtual coupon for a movie night, a giant dessert session, or anything your heart desires today.The best twin i found. 💖
                 </p>
                 <div style="font-size: 2.5rem; margin-top: 15px;">🎁 🍫 ✨</div>
             </div>
