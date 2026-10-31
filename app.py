@@ -9,7 +9,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Helper function to convert images to base64 safely
+# Helper function to convert files to base64 safely
 def get_base64_encoded_file(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -85,6 +85,18 @@ st.markdown("""
         border: 3px solid white;
         box-shadow: 0 4px 12px rgba(236,72,153,0.15);
     }
+    
+    /* Clean custom styling for our web player */
+    .audio-wrapper {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+    }
+    audio {
+        width: 100%;
+        max-width: 320px;
+        border-radius: 50px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -121,8 +133,6 @@ with st.container():
     # Before celebration action
     if not st.session_state.celebrated:
         st.write("You're the absolute best sister in the entire world. Make a wish and blow out the candle below! 🎂")
-        
-        # FIXED: Added explicit total column count parameter (3) to eliminate the TypeError completely
         c1, c2, c3 = st.columns(3)
         with c2:
             if st.button("🌬️ Blow Out & Celebrate!", use_container_width=True):
@@ -133,15 +143,21 @@ with st.container():
     else:
         st.balloons()
         
-        # Clean Audio File Retrieval block
+        # HTML5 Hybrid Audio Stream - Solves the server player crash natively
         try:
             prefix = "kashu/" if os.path.exists("kashu/birthday-song.mp3") else ""
             song_path = f"{prefix}birthday-song.mp3"
             
             if os.path.exists(song_path):
-                with open(song_path, 'rb') as audio_file:
-                    audio_bytes = audio_file.read()
-                st.audio(audio_bytes, format="audio/mp3", autoplay=True, loop=True)
+                audio_base64 = get_base64_encoded_file(song_path)
+                st.markdown(f"""
+                    <div class="audio-wrapper">
+                        <audio controls autoplay loop>
+                            <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                """, unsafe_allow_html=True)
         except Exception:
             pass
 
