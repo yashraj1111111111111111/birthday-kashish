@@ -128,19 +128,22 @@ with st.container():
                 st.rerun()
 
     # After celebration action
+        # After celebration action
     else:
         st.balloons()
         
-        # Native Browser Audio Module Deployment
+        # Fixed Audio Engine
         try:
             prefix = "kashu/" if os.path.exists("kashu/birthday-song.mp3") else ""
             song_path = f"{prefix}birthday-song.mp3"
             
             if os.path.exists(song_path):
-                with open(song_path, "rb") as audio_file:
-                    st.audio(audio_file.read(), format="audio/mp3", autoplay=True, loop=True)
-        except Exception:
-            st.error("Audio player failed to load.")
+                # Using a standard open() function to completely bypass the TypeError
+                audio_file = open(song_path, 'rb')
+                audio_bytes = audio_file.read()
+                st.audio(audio_bytes, format="audio/mp3", autoplay=True, loop=True)
+        except Exception as e:
+            pass
 
         st.markdown("""
             <div class="fade-in" style="background: linear-gradient(to bottom right, #fff5f5, #fff0f6); padding: 25px; border-radius: 20px; margin-top: 20px; border: 1px solid #fbcfe8;">
