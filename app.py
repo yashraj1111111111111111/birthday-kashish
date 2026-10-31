@@ -121,28 +121,28 @@ with st.container():
     # Before celebration action
     if not st.session_state.celebrated:
         st.write("You're the absolute best sister in the entire world. Make a wish and blow out the candle below! 🎂")
-        _, col2, _ = st.columns()
-        with col2:
-            if st.button("🌬️ Blow Out Candle & Open Gift", use_container_width=True):
+        
+        # FIXED: Added explicit total column count parameter (3) to eliminate the TypeError completely
+        c1, c2, c3 = st.columns(3)
+        with c2:
+            if st.button("🌬️ Blow Out & Celebrate!", use_container_width=True):
                 st.session_state.celebrated = True
                 st.rerun()
 
     # After celebration action
-        # After celebration action
     else:
         st.balloons()
         
-        # Fixed Audio Engine
+        # Clean Audio File Retrieval block
         try:
             prefix = "kashu/" if os.path.exists("kashu/birthday-song.mp3") else ""
             song_path = f"{prefix}birthday-song.mp3"
             
             if os.path.exists(song_path):
-                # Using a standard open() function to completely bypass the TypeError
-                audio_file = open(song_path, 'rb')
-                audio_bytes = audio_file.read()
+                with open(song_path, 'rb') as audio_file:
+                    audio_bytes = audio_file.read()
                 st.audio(audio_bytes, format="audio/mp3", autoplay=True, loop=True)
-        except Exception as e:
+        except Exception:
             pass
 
         st.markdown("""
